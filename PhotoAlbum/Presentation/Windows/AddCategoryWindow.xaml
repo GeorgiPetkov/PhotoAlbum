@@ -1,0 +1,24 @@
+﻿<Custom:Window xmlns:Custom="clr-namespace:Presentation.Windows"
+               x:Class="Presentation.Windows.AddCategoryWindow"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               Title="Add New Category">
+    <Grid Style="{StaticResource MainFrame}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Add New Category" Style="{StaticResource Title}"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Name:"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CategoryName}"/>
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding ErrorMessage}" Style="{StaticResource ErrorMessage}"/>
+        <Button Grid.Row="3" Grid.Column="0" Content="Add" Command="{Binding AddCategoryCommand}" Style="{StaticResource BigButton}"/>
+        <Button Grid.Row="3" Grid.Column="1" Content="Cancel" Command="{Binding CloseCommand}" Style="{StaticResource BigButton}"/>
+    </Grid>
+</Custom:Window>

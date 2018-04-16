@@ -1,0 +1,71 @@
+﻿<Custom:Page xmlns:Custom="clr-namespace:Presentation.Pages"
+             x:Class="Presentation.Pages.UserPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:Presentation.Converters">
+    <Custom:Page.Resources>
+        <converters:UserToGreetingConverter x:Key="UserToGreetingConverter"/>
+    </Custom:Page.Resources>
+    <Grid Style="{StaticResource MainFrame}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding User, Converter={StaticResource UserToGreetingConverter}}" Style="{StaticResource Title}"/>
+        <ItemsControl Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Breadcrumb}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="..\images\breadcrumb-separator.png" Height="30"/>
+                        <Button Content="{Binding Name}" Command="{Binding DataContext.OpenBreadcrumbCategoryCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Custom:Page}}}" CommandParameter="{Binding}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Grid.Row="1" Grid.Column="1" Content="Edit Profile" Command="{Binding OpenEditProfileWindowCommand}"/>
+        <ScrollViewer Grid.Row="2" Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Height="500" ItemsSource="{Binding Inventory}" SelectedValue="{Binding SelectedItem}">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.ViewItemCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Custom:Page}}}" CommandParameter="{Binding}"/>
+                            </Grid.InputBindings>
+                            <Image Grid.Row="0" Source="{Binding ImageSource}" Width="150" Height="150"/>
+                            <TextBlock Grid.Row="1" Text="{Binding Name}" TextTrimming="CharacterEllipsis" FontSize="15"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <Button Content="Add Category" Command="{Binding OpenAddCategoryWindowCommand}"/>
+            <Button Content="Add Image" Command="{Binding OpenAddImageWindowCommand}"/>
+            <Button Content="Edit" Command="{Binding EditItemCommand}"/>
+            <Button Content="Delete" Command="{Binding DeleteItemCommand}"/>
+        </StackPanel>
+    </Grid>
+</Custom:Page>
